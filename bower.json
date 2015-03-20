@@ -1,0 +1,30 @@
+{
+  "name": "penultimate",
+  "version": "0.0.0",
+  "authors": [
+    "Matt Wilkerson <mattisonwilkerson@gmail.com>"
+  ],
+  "description": "Last homework assignment before final project",
+  "license": "ISC",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.3",
+    "underscore": "~1.8.2",
+    "backbone": "~1.1.2",
+    "font-awesome": "~4.3.0",
+    "handlebars": "~3.0.0",
+    "react": "~0.13.1",
+    "react.backbone": "~0.6.0"
+  },
+  "devDependencies": {
+    "mocha": "~2.2.1",
+    "chai": "~2.1.2"
+  }
+}
