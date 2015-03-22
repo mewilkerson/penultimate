@@ -21,7 +21,10 @@
     "font-awesome": "~4.3.0",
     "handlebars": "~3.0.0",
     "react": "~0.13.1",
-    "react.backbone": "~0.6.0"
+    "react.backbone": "~0.6.0",
+    "jquery.serializeJSON": "~2.5.0",
+    "backbonefire": "~0.5.1",
+    "firebase": "~2.2.3"
   },
   "devDependencies": {
     "mocha": "~2.2.1",
