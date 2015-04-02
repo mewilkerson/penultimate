@@ -6,38 +6,45 @@ var penultimate = {
   fire: null,
   firebaseURL: "https://penultimate.firebaseio.com/",
 
-  login: function(userData){
-    penultimate.fire.authWithPassword(userData, function(err, authData){
-      if (err) {
-        conole.log("failed to log in.", userData.email, err);
-        return;
-      }
-      console.log("logged", userData.email, "in successfully");
-    });
-  },
 
   logout: function() {
     penultimate.fire.unauth();
   },
 
-  register: function(userData) {
-    penultimate.fire.createUser(userData, function(err, udata){
-      if(err) {
-        console.log("registration error", userData.email, error);
-        return;
-      }
-      console.log("Successfully registered", userData.email, "as", udata.uid)
-    });
+
+
+  init: function(){
+    _.extend(this, Backbone.Events);
+    this.currentUser = new Backbone.Model();
+    this.fire = new Firebase(this.firebaseURL);
+    this.fire.onAuth(this.onAuthCallback);
+  },
+
+  isLoggedIn: function() {
+    return !!(this.currentUser && this.currentUser.id);
+  },
+
+  twitterLogin: function(){
+      this.fire.authWithOAuthRedirect("twitter", function(error) {
+        if (error) {
+          console.log("Login Failed!", error);
+        } else {
+          // We'll never get here, as the page will redirect on success.
+        }
+      });
   },
 
   onAuthCallback: function(authData) {
     if(authData) {
-      penultimate.currentUser = authData; 
-      console.log("A user is logged in", authData);
+      penultimate.authData = authData;
+      penultimate.currentUser.set(authData.twitter.cachedUserProfile);
+      console.log("A user is drowning in the river. Go help them.", authData);
     } else {
-      penultimate.currentUser = null;
+      penultimate.authData = null;
+      penultimate.currentUser.clear();
       console.log("No one is logged in.");
     }
+    penultimate.trigger("sign:in:out");
   }  
   
 };

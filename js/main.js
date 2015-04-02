@@ -1,37 +1,28 @@
 $(function(){
 
-  penultimate.on("sign:in:out", function(){
-    var col;
-    if (penultimate.currentUser) {
-      col = new penultimate.models.UserTodoList();
-    } else {
-      col = null;
-    }
-    todos.setProps({collection: col});
-  });
-
-  var loginEl = $(".login-form").get(0);
-  var logoutEl = $(".logout-button").get(0);
-  var todosEl = $(".todos").get(0);
+  penultimate.init();
 
   React.render(
-    React.createElement(penultimate.views.Login),
-    loginEl
-    );
+    React.createElement(
+      penultimate.views.Header,
+      {model: penultimate.currentUser}
+    ),
+    document.querySelector("header")
+  );
+
+  var song = "today is gonna be the day that their gonna bring back to you\nby now you shoulda some how realized what you gotta do";
+
+  var lyrics = penultimate.models.SongChordsLyrics.fromSong(song);
+
+  window.lyrics = lyrics;
 
   React.render(
-    React.createElement(penultimate.views.LogoutButton),
-    logoutEl
-    );
+    React.createElement(
+      penultimate.views.Lyrics,
+      {collection: lyrics, editing: false}
+      ),
 
-  var todos = React.render(
-    React.createElement(penultimate.views.Todos),
-    todosEl
-    );
-
-  penultimate.fire = new Firebase(penultimate.firebaseURL);
-  penultimate.onAuth(penultimate.onAuthCallback);
+    document.querySelector(".song-display")
+  );
 
 });
-
-// Need to match these render functions to correct div's

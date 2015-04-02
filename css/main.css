@@ -1,5 +1,6 @@
 body {
   font-family: 'Lato', sans-serif;
+  margin: 0;
 }
 .page-container {
   width: 960px;
@@ -7,7 +8,7 @@ body {
   background: #efefef;
 }
 header {
-  height: 90px;
+  overflow: hidden;
   background: grey;
 }
 .header-left {
@@ -20,6 +21,12 @@ header {
   font-size: 25px;
   float: right;
   margin: 20px;
+}
+.twitter-info {
+  float: right;
+}
+.twitter-info .logout-button {
+  color: blue;
 }
 .welcome-box {
   margin-top: 40px;
@@ -40,4 +47,22 @@ header {
   margin-right: auto;
   padding-bottom: 30px;
   line-height: 2;
+}
+.combo {
+  display: inline-block;
+  margin: 3px;
+  font-size: 18px;
+  text-align: center;
+}
+.combo .chord {
+  font-family: Fira Sans, sans-serif;
+  font-size: 1.2em;
+  color: #008;
+  min-height: 35px;
+}
+.combo .word {
+  padding: 10px;
+}
+.combo input {
+  text-align: center;
 }

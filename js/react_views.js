@@ -1,97 +1,139 @@
 (function(views){
 
-  var TextField = React.createClass({displayName: "TextField",
-
-    render: function(){
-      var name = this.props.name;
-      var htmlID = "react-textfield-" + name + "-" + Math.random();
-      var label = this.props.label || name;
-      var type = this.props.type || "text";
-      return (
-        React.createElement("div", {className: "textfield"}, 
-          React.createElement("div", null, 
-            React.createElement("label", {htmlFor: htmlID}, label)
-          ), 
-          React.createElement("div", null, 
-            React.createElement("input", {type: type, name: name, id: htmlID})
-          )
-        )  
-        );
-    }
-
-  });
-
-// ---------
-
-  var Login = React.createClass({displayName: "Login",
-
-    onSubmit: function(e) {
-      e.preventDefault();
-      var loginData = $(e.target).serializeJSON();
-      penultimate.login(loginData);
+  views.LoggedOutView = React.createClass({displayName: "LoggedOutView",
+    logIn: function(e){
+      e.preventDefault;
+      penultimate.twitterLogin();
     },
-
     render: function(){
       return (
-        React.createElement("form", {onSubmit: this.onSubmit}, 
-          React.createElement(TextField, {name: "email", label: "Email"}), 
-          React.createElement(TextField, {name: "password", label: "Password", type: "password"}), 
-
-          React.createElement("button", null, "Sign In")
-        )  
-
-        );
+        React.createElement("div", null, 
+          React.createElement("h2", null, "YOU ARE LOGGED OUT"), 
+          React.createElement("button", {onClick: this.logIn}, "Log in with Twitter")
+        )
+      );
     }
-
   });
 
-// ------------
 
-
-  var LogooutButton = React.createClass({displayName: "LogooutButton",
-    onClick: function(e) {
+  views.LoggedInView = React.createBackboneClass({
+    logOut: function(e){
       e.preventDefault();
       penultimate.logout();
     },
+
+
     render: function(){
-      return React.createElement("button", {onClick: this.onClick}, "Logout")
+      return (
+        React.createElement("div", {className: "twitter-info"}, 
+          React.createElement("img", {src: this.props.model.get("profile_image_url")}), 
+          React.createElement("div", null, this.props.model.get("name")), 
+          React.createElement("button", {className: "logout-button", onClick: this.logOut}, "Log Out")
+        )
+        );
     }
   });
 
-// -------------
 
-views.Login = Login;
-views.LogooutButton = LogooutButton;
+  views.LoggedInOrOut = React.createBackboneClass({
+    getInfo: function(){
+      if (this.props.model.id) {
+        return React.createElement(views.LoggedInView, {model: this.props.model})
+      } else {
+        return React.createElement(views.LoggedOutView, null)
+      }
+    },
 
+    render: function() {
+      return (
+        React.createElement("div", {className: "twitter-login"}, 
+           this.getInfo() 
+        )  
+        );
+    }
+  });
 
+  views.Header = React.createBackboneClass({
+    render: function() {
+      return (
+      React.createElement("div", null, 
+        React.createElement("div", {className: "logo"}, "PENULTIMATE"), 
+        React.createElement(views.LoggedInOrOut, {model: this.props.model})
+      )  
+      );
+    }
+  });
 
 })(penultimate.views);
+
+
 (function(views){
 
-  var Todos = React.createBackboneClass({
-
-    makeLI: function(model, index){
-      return React.createElement("li", {key: index}, model.get("task"));
+  views.LyricWord = React.createBackboneClass({
+    getChord: function() {
+      if(this.props.editing) {
+        return React.createElement("input", {name: "chord", size: "6"})
+      }
+      else {
+        return React.createElement("div", {className: "chord"}, this.props.model.get("chord")) 
+      }
     },
 
     render: function(){
-      if (this.props.collection) {
-        return (
-          React.createElement("ul", null, 
-            this.props.collection.map(this.makeLI)
-          )  
-          );
-      } else {
-        return (
-          React.createElement("ul", null, 
-            React.createElement("li", null, " No list currently loaded.")
-          )  
-          );
+      return (
+        React.createElement("div", {className: "combo"}, 
+          this.getChord(), 
+          React.createElement("div", {className: "word"}, this.props.model.get("word"))
+        )
+      );
+    }  
+
+  });
+
+  views.Lyrics = React.createBackboneClass({
+
+    
+    getDefaultProps: function() {
+      return {
+        editing: false
       }
+    },
+
+    buildLine: function(models, lineIndex) {
+      var lyricWords = _.map(models, function(model){
+        return React.createElement(views.LyricWord, {key: model.get("wordIndex"), model: model, editing: this.props.editing})
+      }, this);
+
+      return (
+        React.createElement("div", {className: "lyric-line", key: lineIndex}, 
+          lyricWords
+        )
+      );
+    },
+
+    buildLines: function() {
+      var uniqLines = _.uniq(this.props.collection.pluck("lineIndex"));
+      return _.map(uniqLines, function(lineNumber){
+        var models = this.props.collection.where({lineIndex: lineNumber});
+        models = _.sortBy(models, function(model) {
+          return model.get("wordIndex");
+        });
+        return this.buildLine(models, lineNumber);
+      }, this);
+    },
+
+    render : function() {
+      return (
+        React.createElement("div", null, 
+          this.buildLines()
+        )
+      )
     }
 
   });
 
-  views.Todos = Todos;
 
 })(penultimate.views);
+
+
+

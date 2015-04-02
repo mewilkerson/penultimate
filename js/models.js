@@ -1,18 +1,25 @@
 (function(models){
 
-  var UserTodoList = Backbone.Firebase.Collection.extend({
-
-    url: function() {
-      if (!penultimate.currentUser) {
-        throw new Error("You are not currently logged in.");
-      }
-      var uid = encodeURIComponent(penultimate.currentUser.uid);
-
-      return penultimate.firebaseURL +  "/todos/" + uid;
-    }
+  models.WordChord = Backbone.Model.extend({
 
   });
 
-  models.UserTodoList = UserTodoList;
+  models.SongChordsLyrics = Backbone.Collection.extend({
+    model: models.WordChord
+  });
+
+  models.SongChordsLyrics.fromSong = function(song) {
+
+    var data = _.flatten(_.map(song.split("\n"), function(line, lineIndex) {
+      var words = line.split(" ");
+      return _.map(words, function(word, wordIndex) {
+        var chords = ["C#min", false, false, false, false, "E", "B", "A"];
+        return {word: word, wordIndex: wordIndex, lineIndex: lineIndex, chord: _.sample(chords)};
+      });
+    }));
+
+    return new models.SongChordsLyrics(data);
+
+  };
 
 })(penultimate.models);

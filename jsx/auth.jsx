@@ -1,68 +1,68 @@
 (function(views){
 
-  var TextField = React.createClass({
-
-    render: function(){
-      var name = this.props.name;
-      var htmlID = "react-textfield-" + name + "-" + Math.random();
-      var label = this.props.label || name;
-      var type = this.props.type || "text";
-      return (
-        <div className="textfield">
-          <div>
-            <label htmlFor={htmlID}>{label}</label>
-          </div>
-          <div>
-            <input type={type} name={name} id={htmlID} />
-          </div>
-        </div>  
-        );
-    }
-
-  });
-
-// ---------
-
-  var Login = React.createClass({
-
-    onSubmit: function(e) {
-      e.preventDefault();
-      var loginData = $(e.target).serializeJSON();
-      tiy.login(loginData);
+  views.LoggedOutView = React.createClass({
+    logIn: function(e){
+      e.preventDefault;
+      penultimate.twitterLogin();
     },
-
     render: function(){
       return (
-        <form onSubmit={this.onSubmit}>
-          <TextField name ="email" label="Email"/>
-          <TextField name="password" label="Password" type="password"/>
-
-          <button>Sign In</button>
-        </form>  
-
-        );
+        <div>
+          <h2>YOU ARE LOGGED OUT</h2>
+          <button onClick={this.logIn}>Log in with Twitter</button>
+        </div>
+      );
     }
-
   });
 
-// ------------
 
-
-  var LogoutButton = React.createClass({
-    onClick: function(e) {
+  views.LoggedInView = React.createBackboneClass({
+    logOut: function(e){
       e.preventDefault();
       penultimate.logout();
     },
+
+
     render: function(){
-      return <button onClick={this.onClick}>Logout</button>
+      return (
+        <div className="twitter-info">
+          <img src={this.props.model.get("profile_image_url")}/>
+          <div>{this.props.model.get("name")}</div>
+          <button className="logout-button" onClick={this.logOut}>Log Out</button>
+        </div>
+        );
     }
   });
 
-// -------------
 
-views.Login = Login;
-views.LogoutButton = LogoutButton;
+  views.LoggedInOrOut = React.createBackboneClass({
+    getInfo: function(){
+      if (this.props.model.id) {
+        return <views.LoggedInView model={this.props.model}/>
+      } else {
+        return <views.LoggedOutView/>
+      }
+    },
 
+    render: function() {
+      return (
+        <div className="twitter-login">
+          { this.getInfo() }
+        </div>  
+        );
+    }
+  });
 
+  views.Header = React.createBackboneClass({
+    render: function() {
+      return (
+      <div>
+        <div className="logo">PENULTIMATE</div>
+        <views.LoggedInOrOut model={this.props.model}/>
+      </div>  
+      );
+    }
+  });
 
 })(penultimate.views);
+
