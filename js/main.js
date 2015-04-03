@@ -1,5 +1,6 @@
 $(function(){
 
+// Renders the header view, gets data from currentUser model
   penultimate.init();
 
   React.render(
@@ -10,16 +11,19 @@ $(function(){
     document.querySelector("header")
   );
 
-  var song = "today is gonna be the day that their gonna bring back to you\nby now you shoulda some how realized what you gotta do";
+
+  var song = "Today is gonna be the day that they're gonna throw it back to you\nby now you shoulda some how realized what you gotta do\nI don't believe that anybody feels the way I do about you now";
 
   var lyrics = penultimate.models.SongChordsLyrics.fromSong(song);
 
   window.lyrics = lyrics;
 
+// wrap this in another view that has a button that alternates between modes
+
   React.render(
     React.createElement(
-      penultimate.views.Lyrics,
-      {collection: lyrics, editing: false}
+      penultimate.views.LyricsEditor,
+      {collection: lyrics}
       ),
 
     document.querySelector(".song-display")

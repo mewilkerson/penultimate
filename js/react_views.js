@@ -69,10 +69,51 @@
 
 (function(views){
 
+  // views.ChordsEnter = React.createBackboneClass({
+  //   enterChords: function(e){
+  //     e.preventDefault;
+  //   },
+  //   render: function(){
+  //     return (
+  //       <div>
+  //         <button onClick={this.enterChords}>Click here to enter chords</button>
+  //       </div>
+  //     );
+  //   }
+
+  // });
+
+  // views.ChordsSet = React.createBackboneClass({
+  //   setChords: function(e){
+  //     e.preventDefault;
+  //   },
+  //   render: function(){
+  //     return (
+  //       <div>
+  //         <button onClick={this.setChords}>Set Chords</button>
+  //       </div>  
+  //     );
+  //   }
+  // });
+
+  // // If this.props.editing = true...
+  // views.EnterOrSet = React.createBackboneClass({
+  //   findOut: function(){
+  //     if ()
+  //   }
+  // })
+
+
+
+// ----------------
   views.LyricWord = React.createBackboneClass({
+    updateModel: function(e) {
+      this.props.model.set("chord", e.target.value);
+    },
+
     getChord: function() {
       if(this.props.editing) {
-        return React.createElement("input", {name: "chord", size: "6"})
+        return React.createElement("input", {onChange: this.updateModel, name: "chord", size: "6", value: this.props.model.get("chord") || ""})
       }
       else {
         return React.createElement("div", {className: "chord"}, this.props.model.get("chord")) 
@@ -131,6 +172,46 @@
     }
 
   });
+
+  views.LyricsEditor = React.createBackboneClass({
+
+    getInitialState: function() {
+      return {
+        editing: false
+      }
+    },
+
+    saveChords: function() {
+      this.setState({editing: false});
+    },
+
+    editChords: function() {
+      this.setState({editing: true});
+    },
+
+    getEditButton: function() {
+      if (this.state.editing) {
+        return React.createElement("button", {onClick: this.saveChords}, "Save Chords")
+      }
+      else {
+        return React.createElement("button", {onClick: this.editChords}, "Edit Chords")
+      }
+    },
+
+    render: function() {
+      return (
+        React.createElement("div", null, 
+          React.createElement("div", null, 
+            this.getEditButton()
+          ), 
+          React.createElement("div", null, 
+            React.createElement(views.Lyrics, {collection: this.props.collection, editing: this.state.editing})
+          )
+        )
+      );
+    }
+
+  })
 
 
 })(penultimate.views);

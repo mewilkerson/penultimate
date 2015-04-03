@@ -22,4 +22,33 @@
 
   };
 
+
+  // models.Song = Backbone.Model.extend({
+
+  // });
+
+  // models.Songs = Backbone.Firebase.Collection.extend({
+  //   model: models.Song,
+
+  //   url: function() {
+  //     if (!penultimate.currentUser) {
+  //       throw new Error("No one is logged in.");
+  //     }
+  //     var uid = encodeURIComponent(tiy.currentUser.uid);
+
+  //     return tiy.firebaseURL + "/todos/" + uid;
+  //   }
+  // });
+
+  // var songRef = ref.child("lyrics");
+  //   songRef.set({
+  //     songLyrics: {
+  //       title: "Wonderwall",
+  //       artist: "Oasis",
+  //       words: "And all the roads that led to you were winding\nand all the lights that lead the way are blinding",
+  //       chords: "C  D  Em\nC  D  Em"
+
+  //     }
+  //   });
+
 })(penultimate.models);
