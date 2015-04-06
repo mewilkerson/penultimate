@@ -69,43 +69,7 @@
 
 (function(views){
 
-  // views.ChordsEnter = React.createBackboneClass({
-  //   enterChords: function(e){
-  //     e.preventDefault;
-  //   },
-  //   render: function(){
-  //     return (
-  //       <div>
-  //         <button onClick={this.enterChords}>Click here to enter chords</button>
-  //       </div>
-  //     );
-  //   }
 
-  // });
-
-  // views.ChordsSet = React.createBackboneClass({
-  //   setChords: function(e){
-  //     e.preventDefault;
-  //   },
-  //   render: function(){
-  //     return (
-  //       <div>
-  //         <button onClick={this.setChords}>Set Chords</button>
-  //       </div>  
-  //     );
-  //   }
-  // });
-
-  // // If this.props.editing = true...
-  // views.EnterOrSet = React.createBackboneClass({
-  //   findOut: function(){
-  //     if ()
-  //   }
-  // })
-
-
-
-// ----------------
   views.LyricWord = React.createBackboneClass({
     updateModel: function(e) {
       this.props.model.set("chord", e.target.value);

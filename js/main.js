@@ -18,8 +18,6 @@ $(function(){
 
   window.lyrics = lyrics;
 
-// wrap this in another view that has a button that alternates between modes
-
   React.render(
     React.createElement(
       penultimate.views.LyricsEditor,
