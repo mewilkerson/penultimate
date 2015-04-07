@@ -52,7 +52,7 @@ gulp.task("templates", function(){
       namespace: "JST"
     }))
     .pipe(concat("templates.js"))
-    .pipe(gulp.dest("./js/"));
+    .pipe(gulp.dest("./public/js/"));
 });
 
 
@@ -63,7 +63,7 @@ gulp.task('react', function () {
     .pipe(notifyError())
     .pipe(react())
     .pipe(concat("react_views.js"))
-    .pipe(gulp.dest("./js/"));
+    .pipe(gulp.dest("./public/js/"));
 });
 
 
@@ -73,7 +73,7 @@ gulp.task("less", function() {
   gulp.src(lessPath)
     .pipe(notifyError())
     .pipe(less())
-    .pipe(gulp.dest("./css"));
+    .pipe(gulp.dest("./public/css"));
 });
 
 
@@ -111,7 +111,7 @@ gulp.task("bower:assets:js", function() {
   gulp.src(sorted)
     .pipe(notifyError())
     .pipe(concat("vendor.js"))
-    .pipe(gulp.dest("vendor/js"));
+    .pipe(gulp.dest("public/vendor/js"));
 });
 
 
@@ -125,7 +125,7 @@ gulp.task("bower:assets:css", function() {
   gulp.src(files)
     .pipe(notifyError())
     .pipe(concat("vendor.css"))
-    .pipe(gulp.dest("vendor/css"));
+    .pipe(gulp.dest("public/vendor/css"));
 });
 
 
@@ -138,7 +138,7 @@ gulp.task("bower:assets:fonts", function(){
 
   gulp.src(files)
     .pipe(notifyError())
-    .pipe(gulp.dest("vendor/fonts"));
+    .pipe(gulp.dest("public/vendor/fonts"));
 });
 
 // -- DEV ASSETS -- //
@@ -150,5 +150,5 @@ gulp.task("bower:assets:dev", function(){
 
   gulp.src(files)
     .pipe(notifyError())
-    .pipe(gulp.dest("vendor/dev"));
+    .pipe(gulp.dest("public/vendor/dev"));
 });
