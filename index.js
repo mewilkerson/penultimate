@@ -37,6 +37,30 @@ function processLyrics(lyrics){
   return retData;
 };
 
+app.get("/search", function(req, res) {
+
+  var query = req.query.query;
+  var genre = req.query.genre;
+
+  rg_api.searchSong(query, genre, function(err, songs){
+    if (err) {
+      res.status(500).json({error: err.toString()});
+    } else {
+      var song = songs[0];
+      var link = song.link;
+      rg_api.searchLyricsAndExplanations(link, genre, function(err, resp){
+        if (err) {
+          res.status(500).json({error: err.toString()});
+        } else {
+          var lyrics = resp.lyrics;
+          res.json(processLyrics(lyrics));
+        }
+      });
+    }
+  });
+
+});
+
 app.get("/lyrics/:genre/*", function(req, res) {
 
   var link = req.params["0"];
@@ -47,14 +71,7 @@ app.get("/lyrics/:genre/*", function(req, res) {
       res.status(500).json({error: err.toString()});
     } else {
       var lyrics = resp.lyrics;
-
       res.json(processLyrics(lyrics));
-
-      // res.send( processLyrics(lyrics, true) );
-
-      // res.send( lyrics.getFullLyrics(true) );
-
-      // res.send("OK");
     }
   });
 

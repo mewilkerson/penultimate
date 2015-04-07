@@ -11,7 +11,7 @@ header {
   background: grey;
 }
 .header-left {
-  font-size: 35px;
+  font-size: 55px;
   font-family: 'Quicksand', sans-serif;
   float: left;
   margin: 20px;
@@ -27,25 +27,10 @@ header {
 .twitter-info .logout-button {
   color: blue;
 }
-.welcome-box {
-  margin-top: 40px;
-  background: grey;
-  width: 300px;
-  border: 1px solid #404540;
-  border-radius: 6px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.welcome-box h2 {
-  text-align: center;
-}
-.form {
-  width: 50%;
-  height: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  padding-bottom: 30px;
-  line-height: 2;
+.search {
+  margin: 20px;
+  background: red;
+  padding: 10px;
 }
 .combo {
   display: inline-block;
@@ -64,4 +49,20 @@ header {
 }
 .combo input {
   text-align: center;
+}
+.search-auto-complete {
+  position: relative;
+}
+.search-auto-complete .drop-down {
+  position: absolute;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.search-auto-complete .drop-down li {
+  padding: 5px;
+  background: green;
+}
+.search-auto-complete .drop-down li:hover {
+  background: orange;
 }

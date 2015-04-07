@@ -13,7 +13,7 @@ header {
   background: grey;
 }
 .header-left {
-  font-size: 35px;
+  font-size: 55px;
   font-family: 'Quicksand', sans-serif;
   float: left;
   margin: 20px;
@@ -32,26 +32,15 @@ header {
   }
 }
 
-.welcome-box {
-  margin-top: 40px;
-  background: grey;
-  width: 300px;
-  border: 1px solid #404540;
-  border-radius: 6px;
-  margin-left: auto;
-  margin-right: auto;
+.search {
+  margin: 20px;
+  background: red;
+  padding: 10px;
+  .search-bar {
+
+  }
 }
-.welcome-box h2 {
-  text-align: center;
-}
-.form {
-  width: 50%;
-  height: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  padding-bottom: 30px;
-  line-height: 2;
-}
+
 .combo {
   display: inline-block;
   margin: 3px;
@@ -68,5 +57,24 @@ header {
   }
   input {
     text-align: center;
+  }
+}
+
+.search-auto-complete {
+  position: relative;
+
+  .drop-down {
+    position: absolute;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      padding: 5px;
+      background: green;
+      &:hover {
+        background: orange;
+      }
+    }
   }
 }

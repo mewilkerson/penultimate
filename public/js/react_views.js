@@ -182,3 +182,56 @@
 
 
 
+
+(function(views){
+
+  views.Search = React.createClass({displayName: "Search",
+    onSubmit: function(e) {
+      e.preventDefault();
+
+      var query = this.refs.query.getDOMNode().value;
+      var genre = this.refs.genre.getDOMNode().value;
+
+      this.props.onSearch({
+        query: query,
+        genre: genre
+      });
+    },
+
+    render: function(){
+      return (
+      React.createElement("div", null, 
+        React.createElement("div", null, 
+          React.createElement("form", {onSubmit: this.onSubmit}, 
+            React.createElement("input", {ref: "query", type: "text", className: "search-bar", size: "50"}), 
+            React.createElement("select", {ref: "genre"}, 
+              React.createElement("option", {value: "rock"}, "Rock"), 
+              React.createElement("option", {value: "rap"}, "Rap"), 
+              React.createElement("option", {value: "country"}, "Country"), 
+              React.createElement("option", {value: "pop"}, "Pop")
+            ), 
+            React.createElement("button", {className: "search-button"}, "Search")
+          )
+        )
+        /*<div className="search-auto-complete">
+          <views.SearchAutoCompleteDropDown/>
+        </div>*/
+      )
+      );
+    }
+  });
+
+  views.SearchAutoCompleteDropDown = React.createClass({displayName: "SearchAutoCompleteDropDown",
+    render: function() {
+      return (
+        React.createElement("ul", {className: "drop-down"}, 
+          React.createElement("li", null, "Wonderwall by Oasis"), 
+          React.createElement("li", null, "Wonderwall by Mike Posner (Ft. Big KRIT)"), 
+          React.createElement("li", null, "Wonderwall by One Direction"), 
+          React.createElement("li", null, "Wonderwall by Illy")
+        )
+      );
+    }
+  });
+
+})(penultimate.views);

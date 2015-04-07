@@ -11,6 +11,30 @@ $(function(){
     document.querySelector("header")
   );
 
+  var performSearch = function(data) {    
+    $.ajax({
+      url: "/search",
+      data: data,
+      success: function(song) {
+        var lyrics = penultimate.models.SongChordsLyrics.fromSong(song);
+        window.lyricsEditor.setProps({
+          collection: lyrics
+          
+        });
+      }
+    });
+  }
+
+
+  React.render(
+    React.createElement(
+      penultimate.views.Search, {
+        onSearch: performSearch
+      }
+    ),
+    document.querySelector(".search")
+  );
+
 
   var song = "Today is gonna be the day that they're gonna throw it back to you\nby now you shoulda some how realized what you gotta do\nI don't believe that anybody feels the way I do about you now";
 
@@ -21,7 +45,7 @@ $(function(){
 
   window.lyrics = lyrics;
 
-  React.render(
+  window.lyricsEditor = React.render(
     React.createElement(
       penultimate.views.LyricsEditor,
       {collection: lyrics}
