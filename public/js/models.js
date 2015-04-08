@@ -10,14 +10,23 @@
 
   models.SongChordsLyrics.fromSong = function(song) {
 
-    linesSeen = [];
-    lastLine = -1;
+    // linesSeen = [];
+    // lastLine = -1;
+
+    linesSeen = -1;
 
     var data = _.flatten(_.map(song, function(section, sectionIndex){
 
       var sectionName = section.title;
       
-      return _.map(section.content.trim().split("\n"), function(line, lineIndex) {
+      var lines = _.compact(section.content.trim().split("\n"));
+
+      // console.log("lines:", lines);
+
+      return _.map(lines, function(line, lineIndex) {
+        linesSeen++;
+        // console.log(lineIndex, line);
+
         var words = _.reject(line.trim().split(" "), function(word){
           // reject whitespace words
           return word.match(/^\s*$/);
@@ -25,19 +34,21 @@
         return _.map(words, function(word, wordIndex) {
           var chords = ["C#min", false, false, false, false, "E", "B", "A"];
           
-          if (_.contains(linesSeen, lineIndex)) {
-            if (lineIndex !== lastLine) {
-              lineIndex = lastLine+1;
-            }
-          }
+          // if (_.contains(linesSeen, lineIndex)) {
+          //   if (lineIndex !== lastLine) {
+          //     lineIndex = lastLine+1;
+          //   }
+          // }
 
-          linesSeen.push(lineIndex);
-          lastLine = lineIndex;
+          // linesSeen.push(lineIndex);
+          // lastLine = lineIndex;
+
+          console.log(linesSeen);
 
           return {
             word: word, 
             wordIndex: wordIndex, 
-            lineIndex: lineIndex,
+            lineIndex: linesSeen,
             sectionIndex: sectionIndex,
             sectionName: sectionName,
             chord: _.sample(chords)
