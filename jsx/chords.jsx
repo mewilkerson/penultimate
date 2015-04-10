@@ -94,6 +94,9 @@
     },
 
     render: function() {
+      if (!this.props.collection) {
+        return false;
+      }
       return (
         <div>
           <div>
@@ -106,7 +109,7 @@
       );
     }
 
-  })
+  });
 
 
 })(penultimate.views);

@@ -25,7 +25,7 @@ var penultimate = {
   },
 
   twitterLogin: function(){
-      this.fire.authWithOAuthRedirect("twitter", function(error) {
+      this.fire.authWithOAuthPopup("twitter", function(error) {
         if (error) {
           console.log("Login Failed!", error);
         } else {

@@ -4,28 +4,37 @@
 
   });
 
-  models.SongChordsLyrics = Backbone.Collection.extend({
-    model: models.WordChord
+  models.Other = Backbone.Firebase.Collection.extend({
+
+    url: penultimate.firebaseURL + "other2"
+  });
+
+  models.SongChordsLyrics = Backbone.Firebase.Collection.extend({
+    model: models.WordChord,
+
+    url: function() {
+      var root = penultimate.firebaseURL;
+      var uid = penultimate.currentUser.id;
+      return root + "songs/" + uid + "/" + encodeURIComponent(this.songName);
+    },
+
+    initialize: function(data, opts) {
+      this.songName = opts.songName;
+    }
   });
 
   models.SongChordsLyrics.fromSong = function(song) {
 
-    // linesSeen = [];
-    // lastLine = -1;
-
     linesSeen = -1;
 
-    var data = _.flatten(_.map(song, function(section, sectionIndex){
+    var data = _.flatten(_.map(song.lyrics, function(section, sectionIndex){
 
       var sectionName = section.title;
       
       var lines = _.compact(section.content.trim().split("\n"));
 
-      // console.log("lines:", lines);
-
       return _.map(lines, function(line, lineIndex) {
         linesSeen++;
-        // console.log(lineIndex, line);
 
         var words = _.reject(line.trim().split(" "), function(word){
           // reject whitespace words
@@ -33,17 +42,6 @@
         });
         return _.map(words, function(word, wordIndex) {
           var chords = ["C#min", false, false, false, false, "E", "B", "A"];
-          
-          // if (_.contains(linesSeen, lineIndex)) {
-          //   if (lineIndex !== lastLine) {
-          //     lineIndex = lastLine+1;
-          //   }
-          // }
-
-          // linesSeen.push(lineIndex);
-          // lastLine = lineIndex;
-
-          console.log(linesSeen);
 
           return {
             word: word, 
@@ -58,9 +56,7 @@
 
     }));
 
-    console.log("data", data);
-
-    return new models.SongChordsLyrics(data);
+    return new models.SongChordsLyrics(_.first(data,5), {songName: song.name});
 
   };
 

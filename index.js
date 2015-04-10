@@ -48,12 +48,16 @@ app.get("/search", function(req, res) {
     } else {
       var song = songs[0];
       var link = song.link;
+      var name = song.name;
       rg_api.searchLyricsAndExplanations(link, genre, function(err, resp){
         if (err) {
           res.status(500).json({error: err.toString()});
         } else {
           var lyrics = resp.lyrics;
-          res.json(processLyrics(lyrics));
+          res.json({
+            name: name,
+            lyrics: processLyrics(lyrics)
+          });
         }
       });
     }

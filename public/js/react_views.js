@@ -64,6 +64,25 @@
     }
   });
 
+  views.Welcome = React.createBackboneClass({
+    render: function(){
+      return (
+        React.createElement("div", {className: "welcome-container"}, 
+          React.createElement("div", {className: "header"}, 
+            React.createElement("div", {className: "logo"}, "PENULTIMATE"), 
+            React.createElement(views.LoggedInOrOut, {model: this.props.model})
+          ), 
+          React.createElement("div", {className: "welcome-main"}, 
+            React.createElement("div", {className: "center-box"}, 
+              React.createElement("h2", null, "Come on in"), 
+              React.createElement("h3", null)
+            )
+          )
+        )
+      )
+    }
+  });
+
 })(penultimate.views);
 
 
@@ -163,6 +182,9 @@
     },
 
     render: function() {
+      if (!this.props.collection) {
+        return false;
+      }
       return (
         React.createElement("div", null, 
           React.createElement("div", null, 
@@ -175,12 +197,50 @@
       );
     }
 
-  })
+  });
 
 
 })(penultimate.views);
 
 
+
+
+(function(views){
+
+  views.Main = React.createBackboneClass({
+
+    renderApp: function() {
+      return (
+        React.createElement("div", {className: "page-container"}, 
+          React.createElement("header", null, 
+            React.createElement(views.Header, {model: this.props.model})
+          ), 
+          React.createElement("div", {className: "search"}, 
+            React.createElement(views.Search, {onSearch: this.props.onSearch})
+          ), 
+          React.createElement("div", {className: "song-display"}, 
+            React.createElement(views.LyricsEditor, {collection: this.props.collection})
+          )
+        )
+      );
+    },
+
+    renderLogin: function() {
+      return React.createElement(views.Header, {model: this.props.model})
+    },
+
+    render: function() {
+      if (penultimate.isLoggedIn()) {
+        return this.renderApp();
+      }
+      else {
+        return this.renderLogin();
+      }
+    }
+
+  });
+
+})(penultimate.views);
 
 
 (function(views){

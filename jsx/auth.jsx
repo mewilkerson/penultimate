@@ -64,5 +64,24 @@
     }
   });
 
+  views.Welcome = React.createBackboneClass({
+    render: function(){
+      return (
+        <div className="welcome-container">
+          <div className="header">
+            <div className="logo">PENULTIMATE</div>
+            <views.LoggedInOrOut model={this.props.model}/>
+          </div>
+          <div className="welcome-main">
+            <div className="center-box">
+              <h2>Come on in</h2>
+              <h3></h3>
+            </div>
+          </div> 
+        </div>
+      )
+    }
+  });
+
 })(penultimate.views);
 
