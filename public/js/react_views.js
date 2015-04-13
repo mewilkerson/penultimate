@@ -8,8 +8,8 @@
     render: function(){
       return (
         React.createElement("div", null, 
-          React.createElement("h2", null, "YOU ARE LOGGED OUT"), 
-          React.createElement("button", {onClick: this.logIn}, "Log in with Twitter")
+          React.createElement("p", null, "No user currently logged in."), 
+          React.createElement("a", {href: "#", className: "login-link", onClick: this.logIn}, "Log in with ", React.createElement("i", {className: "fa fa-twitter-square"}))
         )
       );
     }
@@ -26,9 +26,11 @@
     render: function(){
       return (
         React.createElement("div", {className: "twitter-info"}, 
-          React.createElement("img", {src: this.props.model.get("profile_image_url")}), 
-          React.createElement("div", null, this.props.model.get("name")), 
-          React.createElement("button", {className: "logout-button", onClick: this.logOut}, "Log Out")
+          React.createElement("ul", {className: "twitter-list"}, 
+            React.createElement("li", null, React.createElement("img", {src: this.props.model.get("profile_image_url")})), 
+            React.createElement("li", null, React.createElement("div", null, this.props.model.get("name"))), 
+            React.createElement("li", null, React.createElement("button", {className: "logout-button", onClick: this.logOut}, "Log Out"))
+          )
         )
         );
     }
@@ -57,29 +59,14 @@
     render: function() {
       return (
       React.createElement("div", null, 
-        React.createElement("div", {className: "logo"}, "PENULTIMATE"), 
-        React.createElement(views.LoggedInOrOut, {model: this.props.model})
+        React.createElement("div", {className: "header-left"}, 
+          React.createElement("div", {className: "logo"}, "chord circle")
+        ), 
+        React.createElement("div", {className: "header-right"}, 
+          React.createElement(views.LoggedInOrOut, {model: this.props.model})
+        )
       )  
       );
-    }
-  });
-
-  views.Welcome = React.createBackboneClass({
-    render: function(){
-      return (
-        React.createElement("div", {className: "welcome-container"}, 
-          React.createElement("div", {className: "header"}, 
-            React.createElement("div", {className: "logo"}, "PENULTIMATE"), 
-            React.createElement(views.LoggedInOrOut, {model: this.props.model})
-          ), 
-          React.createElement("div", {className: "welcome-main"}, 
-            React.createElement("div", {className: "center-box"}, 
-              React.createElement("h2", null, "Come on in"), 
-              React.createElement("h3", null)
-            )
-          )
-        )
-      )
     }
   });
 
@@ -156,6 +143,32 @@
 
   });
 
+  views.SongBook = React.createBackboneClass({
+
+    // getSong: function(name, index) {
+    //   console.log("rendering", name, index);
+    //   return <li key={index}><strong>wha</strong></li>;
+    // },
+
+    getSong: function(name, index) {
+      return React.createElement("li", {key: index}, name)
+    },
+
+    render: function() {
+      if (penultimate.isLoggedIn()) {
+        return (
+          React.createElement("ul", null, 
+            _.map(this.props.model.getNames(), this.getSong)
+          )
+        )
+      }
+      else {
+        return React.createElement("div", null, "Sign in to view your song book")
+      }
+    }
+
+  });
+
   views.LyricsEditor = React.createBackboneClass({
 
     getInitialState: function() {
@@ -174,10 +187,10 @@
 
     getEditButton: function() {
       if (this.state.editing) {
-        return React.createElement("button", {onClick: this.saveChords}, "Save Chords")
+        return React.createElement("span", {onClick: this.saveChords}, "Save Chords")
       }
       else {
-        return React.createElement("button", {onClick: this.editChords}, "Edit Chords")
+        return React.createElement("span", {onClick: this.editChords}, "Edit Chords")
       }
     },
 
@@ -187,11 +200,24 @@
       }
       return (
         React.createElement("div", null, 
-          React.createElement("div", null, 
-            this.getEditButton()
-          ), 
-          React.createElement("div", null, 
-            React.createElement(views.Lyrics, {collection: this.props.collection, editing: this.state.editing})
+          React.createElement("div", {className: "lyrics-songbook-cntnr"}, 
+            React.createElement("div", {className: "title-bar"}, 
+              React.createElement("div", {className: "title-bar-left"}, 
+                React.createElement("span", {className: "song-title"}, this.props.collection.songName)
+              ), 
+              React.createElement("div", {className: "title-bar-right"}
+              )
+            ), 
+            React.createElement("div", {className: "lyrics-view"}, 
+              React.createElement("div", {className: "song-menu"}, 
+                React.createElement("ul", null, 
+                  React.createElement("li", null, this.getEditButton()), 
+                  React.createElement("li", null, "Transpose"), 
+                  React.createElement("li", null, "Add to My Songbook")
+                )
+              ), 
+              React.createElement(views.Lyrics, {collection: this.props.collection, editing: this.state.editing})
+            )
           )
         )
       );
@@ -220,6 +246,9 @@
           ), 
           React.createElement("div", {className: "song-display"}, 
             React.createElement(views.LyricsEditor, {collection: this.props.collection})
+          ), 
+          React.createElement("div", {className: "songbook"}, 
+            React.createElement(views.SongBook, {model: this.props.model.songBook})
           )
         )
       );

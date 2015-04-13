@@ -23,6 +23,22 @@
     }
   });
 
+   models.SongBook = Backbone.Firebase.Model.extend({
+
+    url: function() {
+      var root = penultimate.firebaseURL;
+      var uid = penultimate.currentUser.id;
+      return root + "songs/" + uid;
+    },
+
+    getNames: function() {
+      return _.filter(this.keys(), function(key){
+        return key !== "id";
+      }, this);
+    }
+
+  });
+
   models.SongChordsLyrics.fromSong = function(song) {
 
     linesSeen = -1;

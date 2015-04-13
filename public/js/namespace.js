@@ -38,9 +38,11 @@ var penultimate = {
     if(authData) {
       penultimate.authData = authData;
       penultimate.currentUser.set(authData.twitter.cachedUserProfile);
+      penultimate.currentUser.songBook = new penultimate.models.SongBook();
       console.log("A user is drowning in the river. Go help them.", authData);
     } else {
       penultimate.authData = null;
+      penultimate.currentUser.songBook = null;
       penultimate.currentUser.clear();
       console.log("No one is logged in.");
     }

@@ -1,76 +1,47 @@
 body {
   font-family: 'Lato', sans-serif;
   margin: 0;
-  background: linear-gradient(270deg, #246655, #25616b, #3d9077);
-  background-size: 600% 600%;
-  -webkit-animation: AnimationName 30s ease infinite;
-  -moz-animation: AnimationName 30s ease infinite;
-  animation: AnimationName 30s ease infinite;
-}
-@-webkit-keyframes AnimationName {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-@-moz-keyframes AnimationName {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-@keyframes AnimationName {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  background-attachment: fixed;
+  background-size: cover;
+  background-image: url(/images/frontpage.jpg);
 }
 .page-container {
   width: 960px;
   margin-left: auto;
   margin-right: auto;
   background: #efefef;
+  background: rgba(255, 255, 255, 0.5);
 }
 header {
   overflow: hidden;
-  background: fff;
-  opacity: 0.5;
+  background: rgba(255, 255, 255, 0.5);
 }
 .header-left {
-  font-size: 55px;
   font-family: 'Quicksand', sans-serif;
   float: left;
   margin: 20px;
+}
+.header-left .logo {
+  font-size: 60px;
 }
 .header-right {
   font-size: 25px;
   float: right;
   margin: 20px;
 }
+.login-link {
+  text-decoration: none;
+}
 .twitter-info {
   float: right;
 }
-.twitter-info .logout-button {
-  color: blue;
+.twitter-info .twitter-list li {
+  list-style: none;
+  display: inline-block;
+  margin: 10px;
 }
 .search {
   margin: 20px;
-  background: red;
   padding: 10px;
 }
 .combo {
@@ -91,19 +62,40 @@ header {
 .combo input {
   text-align: center;
 }
-.search-auto-complete {
-  position: relative;
+.title-bar {
+  height: 50px;
 }
-.search-auto-complete .drop-down {
-  position: absolute;
+.title-bar .title-bar-left {
+  float: left;
+}
+.title-bar .title-bar-left .song-title {
+  font-weight: bold;
+  font-size: 30px;
+  padding: 10px;
+}
+.title-bar .title-bar-right {
+  float: right;
+}
+.title-bar .title-bar-right li {
   list-style: none;
-  margin: 0;
-  padding: 0;
+  display: inline;
+  margin-left: 5px;
 }
-.search-auto-complete .drop-down li {
-  padding: 5px;
-  background: green;
+.lyrics-view {
+  width: 70%;
+  float: left;
+  background: rgba(255, 255, 255, 0.5);
 }
-.search-auto-complete .drop-down li:hover {
-  background: orange;
+.song-menu {
+  height: 40px;
+  background: red;
+}
+.song-menu li {
+  list-style: none;
+  margin: 10px;
+  display: inline;
+}
+.songbook {
+  width: 30%;
+  float: right;
 }

@@ -68,6 +68,32 @@
 
   });
 
+  views.SongBook = React.createBackboneClass({
+
+    // getSong: function(name, index) {
+    //   console.log("rendering", name, index);
+    //   return <li key={index}><strong>wha</strong></li>;
+    // },
+
+    getSong: function(name, index) {
+      return <li key={index}>{name}</li>
+    },
+
+    render: function() {
+      if (penultimate.isLoggedIn()) {
+        return (
+          <ul>
+            {_.map(this.props.model.getNames(), this.getSong)}
+          </ul>
+        )
+      }
+      else {
+        return <div>Sign in to view your song book</div>
+      }
+    }
+
+  });
+
   views.LyricsEditor = React.createBackboneClass({
 
     getInitialState: function() {
@@ -86,10 +112,10 @@
 
     getEditButton: function() {
       if (this.state.editing) {
-        return <button onClick={this.saveChords}>Save Chords</button>
+        return <span onClick={this.saveChords}>Save Chords</span>
       }
       else {
-        return <button onClick={this.editChords}>Edit Chords</button>
+        return <span onClick={this.editChords}>Edit Chords</span>
       }
     },
 
@@ -99,11 +125,24 @@
       }
       return (
         <div>
-          <div>
-            {this.getEditButton()}
-          </div>
-          <div>
-            <views.Lyrics collection={this.props.collection} editing={this.state.editing}/>
+          <div className="lyrics-songbook-cntnr">
+            <div className='title-bar'>
+              <div className="title-bar-left">
+                <span className="song-title">{this.props.collection.songName}</span>
+              </div>
+              <div className="title-bar-right">
+              </div>
+            </div>
+            <div className="lyrics-view">
+              <div className="song-menu">
+                <ul>
+                  <li>{this.getEditButton()}</li>
+                  <li>Transpose</li>
+                  <li>Add to My Songbook</li>
+                </ul>
+              </div>
+              <views.Lyrics collection={this.props.collection} editing={this.state.editing}/>
+            </div>
           </div>
         </div>
       );

@@ -14,6 +14,9 @@
           <div className="song-display">
             <views.LyricsEditor collection={this.props.collection}/>
           </div>
+          <div className="songbook">
+            <views.SongBook model={this.props.model.songBook}/>
+          </div>
         </div>
       );
     },

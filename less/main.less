@@ -1,28 +1,9 @@
 body {
   font-family: 'Lato', sans-serif;
   margin: 0;
-  background: linear-gradient(270deg, #246655, #25616b, #3d9077);
-  background-size: 600% 600%;
-
-  -webkit-animation: AnimationName 30s ease infinite;
-  -moz-animation: AnimationName 30s ease infinite;
-  animation: AnimationName 30s ease infinite;
-
-  @-webkit-keyframes AnimationName {
-      0%{background-position:0% 50%}
-      50%{background-position:100% 50%}
-      100%{background-position:0% 50%}
-  }
-  @-moz-keyframes AnimationName {
-      0%{background-position:0% 50%}
-      50%{background-position:100% 50%}
-      100%{background-position:0% 50%}
-  }
-  @keyframes AnimationName { 
-      0%{background-position:0% 50%}
-      50%{background-position:100% 50%}
-      100%{background-position:0% 50%}
-  }
+  background-attachment: fixed;
+  background-size: cover;
+  background-image: url(/images/frontpage.jpg);
 }
 
 .page-container {
@@ -31,17 +12,20 @@ body {
   margin-right: auto;
   // height: 1000px;
   background: #efefef;
+  background: rgba(255,255,255,.5);
 }
 header {
   overflow: hidden;
-  background: fff;
-  opacity: 0.5;
+  background: rgba(255,255,255,.5);
+  // opacity: 0.5;
 }
 .header-left {
-  font-size: 55px;
   font-family: 'Quicksand', sans-serif;
   float: left;
   margin: 20px;
+  .logo {
+    font-size: 60px;
+  }
 }
 
 .header-right {
@@ -50,16 +34,22 @@ header {
   margin: 20px;
 }
 
+.login-link {
+  text-decoration: none;
+}
+
 .twitter-info {
   float: right;
-  .logout-button {
-    color: blue;
+  .twitter-list li {
+    list-style: none;
+    display: inline-block;
+    margin: 10px;
   }
 }
 
 .search {
   margin: 20px;
-  background: red;
+  // background: red;
   padding: 10px;
   .search-bar {
 
@@ -85,21 +75,63 @@ header {
   }
 }
 
-.search-auto-complete {
-  position: relative;
+// .search-auto-complete {
+//   position: relative;
 
-  .drop-down {
-    position: absolute;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+//   .drop-down {
+//     position: absolute;
+//     list-style: none;
+//     margin: 0;
+//     padding: 0;
 
-    li {
-      padding: 5px;
-      background: green;
-      &:hover {
-        background: orange;
-      }
+//     li {
+//       padding: 5px;
+//       background: green;
+//       &:hover {
+//         background: orange;
+//       }
+//     }
+//   }
+// }
+
+.title-bar {
+  height: 50px;
+  .title-bar-left {
+    float: left;
+    .song-title {
+      font-weight: bold;
+      font-size: 30px;
+      padding: 10px;
     }
   }
+  .title-bar-right {
+    float: right;
+    li {
+      list-style: none;
+      display: inline;
+      margin-left: 5px;
+    }
+  }
+}
+
+.lyrics-view {
+  width: 70%;
+  float: left;
+  background: rgba(255,255,255,.5);
+
+}
+
+.song-menu {
+  height: 40px;
+  background: red;
+  li {
+    list-style: none;
+    margin: 10px;
+    display: inline;
+  }
+}
+
+.songbook {
+  width: 30%;
+  float: right;
 }

@@ -8,8 +8,8 @@
     render: function(){
       return (
         <div>
-          <h2>YOU ARE LOGGED OUT</h2>
-          <button onClick={this.logIn}>Log in with Twitter</button>
+          <p>No user currently logged in.</p>
+          <a href="#" className="login-link" onClick={this.logIn}>Log in with <i className="fa fa-twitter-square"></i></a>
         </div>
       );
     }
@@ -26,9 +26,11 @@
     render: function(){
       return (
         <div className="twitter-info">
-          <img src={this.props.model.get("profile_image_url")}/>
-          <div>{this.props.model.get("name")}</div>
-          <button className="logout-button" onClick={this.logOut}>Log Out</button>
+          <ul className="twitter-list">
+            <li><img src={this.props.model.get("profile_image_url")}/></li>
+            <li><div>{this.props.model.get("name")}</div></li>
+            <li><button className="logout-button" onClick={this.logOut}>Log Out</button></li>
+          </ul>
         </div>
         );
     }
@@ -57,29 +59,14 @@
     render: function() {
       return (
       <div>
-        <div className="logo">PENULTIMATE</div>
-        <views.LoggedInOrOut model={this.props.model}/>
+        <div className="header-left">
+          <div className="logo">chord circle</div>
+        </div>
+        <div className="header-right">
+          <views.LoggedInOrOut model={this.props.model}/>
+        </div>
       </div>  
       );
-    }
-  });
-
-  views.Welcome = React.createBackboneClass({
-    render: function(){
-      return (
-        <div className="welcome-container">
-          <div className="header">
-            <div className="logo">PENULTIMATE</div>
-            <views.LoggedInOrOut model={this.props.model}/>
-          </div>
-          <div className="welcome-main">
-            <div className="center-box">
-              <h2>Come on in</h2>
-              <h3></h3>
-            </div>
-          </div> 
-        </div>
-      )
     }
   });
 
