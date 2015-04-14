@@ -75,8 +75,12 @@
     //   return <li key={index}><strong>wha</strong></li>;
     // },
 
-    getSong: function(name, index) {
-      return <li key={index}><i className="fa fa-star"></i> {name}</li>
+    showSong: function(model) {
+      setSong(model);
+    },
+
+    getSong: function(model, index) {
+      return <li key={index} onClick={this.showSong.bind(this, model)}><i className="fa fa-star"></i> {model.get("name")}</li>
     },
 
     render: function() {
@@ -85,7 +89,7 @@
           <div>
             <h2>My Songbook</h2>
             <ul className="songbook-list">
-              {_.map(this.props.model.getNames(), this.getSong)}
+              {this.props.collection ? this.props.collection.map(this.getSong) : false}
             </ul>
           </div>
         )
@@ -122,6 +126,11 @@
       }
     },
 
+    saveToSongbook: function(e) {
+      e.preventDefault();
+      saveSong();
+    },
+
     render: function() {
       if (!this.props.collection) {
         return false;
@@ -141,7 +150,7 @@
                 <ul>
                   <li>{this.getEditButton()}</li>
                   <li>Transpose</li>
-                  <li>Add to My Songbook</li>
+                  <li onClick={this.saveToSongbook}>Add to My Songbook</li>
                 </ul>
               </div>
               <views.Lyrics collection={this.props.collection} editing={this.state.editing}/>

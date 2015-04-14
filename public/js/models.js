@@ -42,21 +42,21 @@
     }
   });
 
-   models.SongBook = Backbone.Firebase.Model.extend({
+  //  models.SongBook = Backbone.Firebase.Model.extend({
 
-    url: function() {
-      var root = penultimate.firebaseURL;
-      var uid = penultimate.currentUser.id;
-      return root + "songs/" + uid;
-    },
+  //   url: function() {
+  //     var root = penultimate.firebaseURL;
+  //     var uid = penultimate.currentUser.id;
+  //     return root + "songs/" + uid;
+  //   },
 
-    getNames: function() {
-      return _.filter(this.keys(), function(key){
-        return key !== "id";
-      }, this);
-    }
+  //   getNames: function() {
+  //     return _.filter(this.keys(), function(key){
+  //       return key !== "id";
+  //     }, this);
+  //   }
 
-  });
+  // });
 
   models.SongChordsLyrics.fromSong = function(song) {
 
@@ -94,6 +94,41 @@
     return new models.SongChordsLyrics(_.first(data,5), {songName: song.name});
 
   };
+
+
+  models.Song = Backbone.Model.extend({
+    initialize: function() {
+      this.lyricsCollection = new Backbone.Collection(this.get("lyrics"));
+      this.lyricsCollection.songName = this.get("name");
+
+      this.on("sync", function(){
+        console.log("model changed, updating collection");
+        this.lyricsCollection.reset(this.get("lyrics"), {silent: true});
+        this.lyricsCollection.songName = this.get("name");
+      });
+
+      this.listenTo(this.lyricsCollection, "change", function() {
+        console.log("collection changed, updating model");
+        this.set("lyrics", this.lyricsCollection.toJSON());
+      });
+    },
+
+    getLyricsCollection: function() {
+      return this.lyricsCollection;
+    }
+  });
+
+  models.SongBook = Backbone.Firebase.Collection.extend({
+
+    model: models.Song,
+
+    url: function() {
+      var root = penultimate.firebaseURL;
+      var uid = penultimate.currentUser.id;
+      return root + uid + "/songs";
+    }
+
+  });
 
 
 })(penultimate.models);

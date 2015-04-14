@@ -20,15 +20,13 @@ $(function(){
           return word.match(/^\s*$/);
         });
         return _.map(words, function(word, wordIndex) {
-          var chords = ["C#min", false, false, false, false, "E", "B", "A"];
-
           return {
             word: word, 
             wordIndex: wordIndex, 
             lineIndex: linesSeen,
             sectionIndex: sectionIndex,
             sectionName: sectionName,
-            chord: _.sample(chords)
+            chord: null
           };
         });
       });
@@ -38,36 +36,68 @@ $(function(){
     return data;
   }
 
+  window.setSong = function(song) {
+    view.setProps({collection: song.getLyricsCollection()});
+  }
+
   var performSearch = function(data) {    
     $.ajax({
       url: "/search",
       data: data,
-      success: function(song) {
+      success: function(response) {
 
-        console.log("api found: ", song);
+        console.log("api found: ", response);
 
-        var lyrics = new penultimate.models.SongChordsLyrics(null, {songName: song.name});
-        window.temp = lyrics;
-        lyrics.once("sync", function(){
+        var song = penultimate.currentUser.songBook.findWhere({name: response.name});
 
-          // is this a not saved song?
-          if (!lyrics.length) {
-            console.log("---- SONG IS NEW ----");
-            var lyricData = buildSongData(song);
-            console.log("lyrics data", lyricData);
-            // lyrics.add(lyricData);
-            _.each(lyricData, function(d){
-              lyrics.add(d);
-            });
+        if (song) {
+          console.log("song found!");
+        }
+
+        if (!song) {
+          console.log("song not found!");
+          var data = {
+            lyrics: buildSongData(response),
+              name: response.name
           }
-          else {
-            console.log("---- SONG IS ALREADY SAVED ----");
-          }
+          song = new penultimate.models.Song(data);
+        }
 
-          view.setProps({collection: lyrics});
-        });
+        // window.temp = song;
+        window.saveSong = function() {
+          // console.log("add data", song.toJSON());
+          var savedSong = penultimate.currentUser.songBook.add(song.toJSON());
+          savedSong = penultimate.currentUser.songBook.last();
+          // console.log("savedSong", savedSong);
+          // window.ss = savedSong;
+          view.setProps({collection: savedSong.getLyricsCollection()});
+        }
 
-        lyrics.fetch();
+        view.setProps({collection: song.getLyricsCollection()});
+
+
+        // var lyrics = new penultimate.models.SongChordsLyrics(null, {songName: song.name});
+        // window.temp = lyrics;
+        // lyrics.once("sync", function(){
+
+        //   // is this a not saved song?
+        //   if (!lyrics.length) {
+        //     console.log("---- SONG IS NEW ----");
+        //     var lyricData = buildSongData(song);
+        //     console.log("lyrics data", lyricData);
+        //     // lyrics.add(lyricData);
+        //     _.each(lyricData, function(d){
+        //       lyrics.add(d);
+        //     });
+        //   }
+        //   else {
+        //     console.log("---- SONG IS ALREADY SAVED ----");
+        //   }
+
+        //   view.setProps({collection: lyrics});
+        // });
+
+        // lyrics.fetch();
 
       }
     });

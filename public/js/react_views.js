@@ -29,7 +29,7 @@
           React.createElement("ul", {className: "twitter-list"}, 
             React.createElement("li", null, React.createElement("img", {src: this.props.model.get("profile_image_url")})), 
             React.createElement("li", null, React.createElement("div", null, this.props.model.get("name"))), 
-            React.createElement("li", null, React.createElement("button", {className: "logout-button", onClick: this.logOut}, "Log Out"))
+            React.createElement("li", null, React.createElement("i", {className: "fa fa-sign-out", onClick: this.logOut}))
           )
         )
         );
@@ -60,7 +60,7 @@
       return (
       React.createElement("div", null, 
         React.createElement("div", {className: "header-left"}, 
-          React.createElement("div", {className: "logo"}, "chord circle")
+          React.createElement("div", {className: "logo"}, "chord", React.createElement("strong", null, "circle"))
         ), 
         React.createElement("div", {className: "header-right"}, 
           React.createElement(views.LoggedInOrOut, {model: this.props.model})
@@ -150,8 +150,12 @@
     //   return <li key={index}><strong>wha</strong></li>;
     // },
 
-    getSong: function(name, index) {
-      return React.createElement("li", {key: index}, React.createElement("i", {className: "fa fa-star"}), " ", name)
+    showSong: function(model) {
+      setSong(model);
+    },
+
+    getSong: function(model, index) {
+      return React.createElement("li", {key: index, onClick: this.showSong.bind(this, model)}, React.createElement("i", {className: "fa fa-star"}), " ", model.get("name"))
     },
 
     render: function() {
@@ -160,7 +164,7 @@
           React.createElement("div", null, 
             React.createElement("h2", null, "My Songbook"), 
             React.createElement("ul", {className: "songbook-list"}, 
-              _.map(this.props.model.getNames(), this.getSong)
+              this.props.collection ? this.props.collection.map(this.getSong) : false
             )
           )
         )
@@ -197,6 +201,11 @@
       }
     },
 
+    saveToSongbook: function(e) {
+      e.preventDefault();
+      saveSong();
+    },
+
     render: function() {
       if (!this.props.collection) {
         return false;
@@ -216,7 +225,7 @@
                 React.createElement("ul", null, 
                   React.createElement("li", null, this.getEditButton()), 
                   React.createElement("li", null, "Transpose"), 
-                  React.createElement("li", null, "Add to My Songbook")
+                  React.createElement("li", {onClick: this.saveToSongbook}, "Add to My Songbook")
                 )
               ), 
               React.createElement(views.Lyrics, {collection: this.props.collection, editing: this.state.editing})
@@ -240,18 +249,22 @@
 
     renderApp: function() {
       return (
-        React.createElement("div", {className: "page-container"}, 
+        React.createElement("div", {className: "everything"}, 
           React.createElement("header", null, 
-            React.createElement(views.Header, {model: this.props.model})
+            React.createElement("div", {className: "header-container"}, 
+              React.createElement(views.Header, {model: this.props.model})
+            )
           ), 
-          React.createElement("div", {className: "search"}, 
-            React.createElement(views.Search, {onSearch: this.props.onSearch})
-          ), 
-          React.createElement("div", {className: "song-display"}, 
-            React.createElement(views.LyricsEditor, {collection: this.props.collection})
-          ), 
-          React.createElement("div", {className: "songbook"}, 
-            React.createElement(views.SongBook, {model: this.props.model.songBook})
+          React.createElement("div", {className: "page-container"}, 
+            React.createElement("div", {className: "search"}, 
+              React.createElement(views.Search, {onSearch: this.props.onSearch})
+            ), 
+            React.createElement("div", {className: "song-display"}, 
+              React.createElement(views.LyricsEditor, {collection: this.props.collection})
+            ), 
+            React.createElement("div", {className: "songbook"}, 
+              React.createElement(views.SongBook, {collection: this.props.model.songBook})
+            )
           )
         )
       );

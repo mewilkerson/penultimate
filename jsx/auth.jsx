@@ -29,7 +29,7 @@
           <ul className="twitter-list">
             <li><img src={this.props.model.get("profile_image_url")}/></li>
             <li><div>{this.props.model.get("name")}</div></li>
-            <li><button className="logout-button" onClick={this.logOut}>Log Out</button></li>
+            <li><i className="fa fa-sign-out" onClick={this.logOut}></i></li>
           </ul>
         </div>
         );
@@ -60,7 +60,7 @@
       return (
       <div>
         <div className="header-left">
-          <div className="logo">chord circle</div>
+          <div className="logo">chord<strong>circle</strong></div>
         </div>
         <div className="header-right">
           <views.LoggedInOrOut model={this.props.model}/>
