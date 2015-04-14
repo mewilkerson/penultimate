@@ -11,27 +11,30 @@ body {
   margin-left: auto;
   margin-right: auto;
   // height: 1000px;
-  background: #efefef;
-  background: rgba(255,255,255,.5);
+  // background: #efefef;
+  background: rgba(255,255,255,.7);
 }
 header {
   overflow: hidden;
-  background: rgba(255,255,255,.5);
+  // background: rgba(255,255,255,.5);
   // opacity: 0.5;
 }
 .header-left {
   font-family: 'Quicksand', sans-serif;
   float: left;
-  margin: 20px;
+  // margin: 20px;
+  padding-top: 10px;
   .logo {
     font-size: 60px;
+    margin-left: 20px;
   }
 }
 
 .header-right {
   font-size: 25px;
   float: right;
-  margin: 20px;
+  padding-top: 10px;
+  // margin: 20px;
 }
 
 .login-link {
@@ -117,21 +120,36 @@ header {
 .lyrics-view {
   width: 70%;
   float: left;
-  background: rgba(255,255,255,.5);
+  background: rgba(255,255,255,.7);
 
 }
 
 .song-menu {
   height: 40px;
   background: red;
-  li {
-    list-style: none;
-    margin: 10px;
-    display: inline;
+  ul {
+    margin-left: auto;
+    margin-right: auto;
+    li {
+      list-style: none;
+      margin: 10px;
+      display: inline;
+    }
   }
 }
 
 .songbook {
   width: 30%;
   float: right;
+  background: rgba(255,255,255,.7);
+  h2 {
+    text-align: center;
+  }
+}
+
+.songbook-list {
+  list-style: none;
+  li {
+  margin-top: 10px;
+  }
 }

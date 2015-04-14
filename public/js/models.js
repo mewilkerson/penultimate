@@ -12,6 +12,25 @@
   models.SongChordsLyrics = Backbone.Firebase.Collection.extend({
     model: models.WordChord,
 
+    autoSync: false,
+
+    save: function() {
+      var timer;
+      var promise = $.Deferred();
+      var models = this.models;
+      timer = setInterval(function(){
+        if (models.length) {
+          var model = models.shift();
+          model.save();
+        }
+        else {
+          clearInterval(timer);
+          promise.resolve();
+        }
+      },0);
+      return promise;
+    },
+
     url: function() {
       var root = penultimate.firebaseURL;
       var uid = penultimate.currentUser.id;

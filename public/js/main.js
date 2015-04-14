@@ -44,14 +44,21 @@ $(function(){
       data: data,
       success: function(song) {
 
+        console.log("api found: ", song);
+
         var lyrics = new penultimate.models.SongChordsLyrics(null, {songName: song.name});
+        window.temp = lyrics;
         lyrics.once("sync", function(){
 
           // is this a not saved song?
           if (!lyrics.length) {
             console.log("---- SONG IS NEW ----");
             var lyricData = buildSongData(song);
-            lyrics.add(lyricData);
+            console.log("lyrics data", lyricData);
+            // lyrics.add(lyricData);
+            _.each(lyricData, function(d){
+              lyrics.add(d);
+            });
           }
           else {
             console.log("---- SONG IS ALREADY SAVED ----");
@@ -59,6 +66,8 @@ $(function(){
 
           view.setProps({collection: lyrics});
         });
+
+        lyrics.fetch();
 
       }
     });

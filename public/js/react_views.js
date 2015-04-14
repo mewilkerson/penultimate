@@ -151,14 +151,17 @@
     // },
 
     getSong: function(name, index) {
-      return React.createElement("li", {key: index}, name)
+      return React.createElement("li", {key: index}, React.createElement("i", {className: "fa fa-star"}), " ", name)
     },
 
     render: function() {
       if (penultimate.isLoggedIn()) {
         return (
-          React.createElement("ul", null, 
-            _.map(this.props.model.getNames(), this.getSong)
+          React.createElement("div", null, 
+            React.createElement("h2", null, "My Songbook"), 
+            React.createElement("ul", {className: "songbook-list"}, 
+              _.map(this.props.model.getNames(), this.getSong)
+            )
           )
         )
       }

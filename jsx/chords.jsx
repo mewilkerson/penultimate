@@ -76,15 +76,18 @@
     // },
 
     getSong: function(name, index) {
-      return <li key={index}>{name}</li>
+      return <li key={index}><i className="fa fa-star"></i> {name}</li>
     },
 
     render: function() {
       if (penultimate.isLoggedIn()) {
         return (
-          <ul>
-            {_.map(this.props.model.getNames(), this.getSong)}
-          </ul>
+          <div>
+            <h2>My Songbook</h2>
+            <ul className="songbook-list">
+              {_.map(this.props.model.getNames(), this.getSong)}
+            </ul>
+          </div>
         )
       }
       else {
