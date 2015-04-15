@@ -80,19 +80,22 @@ footer {
 
 
 .twitter-info {
-  // margin: 0;
-  // padding: 0;
   text-align: right;
-  ul .twitter-list {
-    margin: 0;
+  .twitter-list {
+    margin: 15px 0 0 0;
     padding: 0;
-  }
-  .twitter-list li {
-    list-style: none;
-    display: inline-block;
-    margin-left: 10px;
+    img {
+      vertical-align: middle;
+    }
   }
 }
+
+.twitter-list li {
+  list-style: none;
+  display: inline-block;
+  margin-left: 10px;
+}
+
 
 .search {
   margin: 20px;
@@ -191,12 +194,17 @@ form select, button {
   height: 40px;
   // background: red;
   ul {
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0;
+    padding: 0;
+
     li {
       list-style: none;
       margin: 10px;
       display: inline;
+      padding: 4px;
+      border: 1px solid eee;
+      border-radius: 4px;
+      background: rgba(255,255,255,.5);
     }
   }
 }
@@ -206,14 +214,31 @@ form select, button {
   float: right;
   background: rgba(255,255,255,.7);
   border-left: solid 5px #c9c9c9;
+  padding: 15px;
   h2 {
     text-align: center;
   }
 }
 
 .songbook-list {
-  list-style: none;
+  padding: 0;
+  margin: 0;
   li {
-  margin-top: 10px;
+  list-style: none;
   }
 }
+
+.songbook-entry {
+  padding: 4px;
+  margin: 3px 0 3px 0;
+}
+
+.songbook-list li i {
+  float: right;
+}
+
+.songbook-list li span:first-child {
+  float: left;
+  max-width: 90%
+
+}   
