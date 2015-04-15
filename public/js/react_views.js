@@ -145,17 +145,17 @@
 
   views.SongBook = React.createBackboneClass({
 
-    // getSong: function(name, index) {
-    //   console.log("rendering", name, index);
-    //   return <li key={index}><strong>wha</strong></li>;
-    // },
-
     showSong: function(model) {
       setSong(model);
     },
 
+    blowUpSong: function(model, e) {
+      e.stopPropagation();
+      destroy(model);
+    },
+
     getSong: function(model, index) {
-      return React.createElement("li", {key: index, onClick: this.showSong.bind(this, model)}, React.createElement("i", {className: "fa fa-star"}), " ", model.get("name"))
+      return React.createElement("li", {key: index, onClick: this.showSong.bind(this, model)}, model.get("name"), " ", React.createElement("i", {className: "fa fa-trash-o", onClick: this.blowUpSong.bind(this, model)}))
     },
 
     render: function() {
@@ -206,6 +206,31 @@
       saveSong();
     },
 
+    transpose: function(e) {
+      e.preventDefault();
+      var key = e.target.value;
+      this.props.collection.transpose(key);
+    },
+
+    getKeyDropDown: function() {
+      var getKeyOption = function(key) {
+        if (key === this.props.collection.songKey) {
+          return React.createElement("option", {value: key, selected: "selected"}, key)
+        }
+        else {
+          return React.createElement("option", {value: key}, key)
+        }
+      }.bind(this);
+
+      var keys = "C C# D Eb E F F# G Ab A Bb B".split(" ");
+      
+      return (
+        React.createElement("select", {onChange: this.transpose}, 
+          _.map(keys, getKeyOption)
+        )
+      )
+    },
+
     render: function() {
       if (!this.props.collection) {
         return false;
@@ -213,18 +238,18 @@
       return (
         React.createElement("div", null, 
           React.createElement("div", {className: "lyrics-songbook-cntnr"}, 
-            React.createElement("div", {className: "title-bar"}, 
-              React.createElement("div", {className: "title-bar-left"}, 
-                React.createElement("span", {className: "song-title"}, this.props.collection.songName)
-              ), 
-              React.createElement("div", {className: "title-bar-right"}
-              )
-            ), 
             React.createElement("div", {className: "lyrics-view"}, 
+              React.createElement("div", {className: "title-bar"}, 
+                React.createElement("div", {className: "title-bar-left"}, 
+                  React.createElement("span", {className: "song-title"}, this.props.collection.songName)
+                ), 
+                React.createElement("div", {className: "title-bar-right"}
+                )
+              ), 
               React.createElement("div", {className: "song-menu"}, 
                 React.createElement("ul", null, 
                   React.createElement("li", null, this.getEditButton()), 
-                  React.createElement("li", null, "Transpose"), 
+                  React.createElement("li", null, "Transpose Key To: ", this.getKeyDropDown()), 
                   React.createElement("li", {onClick: this.saveToSongbook}, "Add to My Songbook")
                 )
               ), 
@@ -265,7 +290,9 @@
             React.createElement("div", {className: "songbook"}, 
               React.createElement(views.SongBook, {collection: this.props.model.songBook})
             )
-          )
+          ), 
+          React.createElement("div", {className: "clear"})
+
         )
       );
     },
@@ -308,7 +335,7 @@
       React.createElement("div", null, 
         React.createElement("div", null, 
           React.createElement("form", {onSubmit: this.onSubmit}, 
-            React.createElement("input", {ref: "query", type: "text", className: "search-bar", size: "50"}), 
+            React.createElement("input", {ref: "query", type: "text", placeholder: "Search for lyrics...", className: "search-bar", size: "120"}), 
             React.createElement("select", {ref: "genre"}, 
               React.createElement("option", {value: "rock"}, "Rock"), 
               React.createElement("option", {value: "rap"}, "Rap"), 

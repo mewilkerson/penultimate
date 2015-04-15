@@ -70,17 +70,17 @@
 
   views.SongBook = React.createBackboneClass({
 
-    // getSong: function(name, index) {
-    //   console.log("rendering", name, index);
-    //   return <li key={index}><strong>wha</strong></li>;
-    // },
-
     showSong: function(model) {
       setSong(model);
     },
 
+    blowUpSong: function(model, e) {
+      e.stopPropagation();
+      destroy(model);
+    },
+
     getSong: function(model, index) {
-      return <li key={index} onClick={this.showSong.bind(this, model)}><i className="fa fa-star"></i> {model.get("name")}</li>
+      return <li key={index} onClick={this.showSong.bind(this, model)}>{model.get("name")} <i className="fa fa-trash-o" onClick={this.blowUpSong.bind(this, model)}></i></li>
     },
 
     render: function() {
@@ -131,6 +131,31 @@
       saveSong();
     },
 
+    transpose: function(e) {
+      e.preventDefault();
+      var key = e.target.value;
+      this.props.collection.transpose(key);
+    },
+
+    getKeyDropDown: function() {
+      var getKeyOption = function(key) {
+        if (key === this.props.collection.songKey) {
+          return <option value={key} selected="selected">{key}</option>
+        }
+        else {
+          return <option value={key}>{key}</option>
+        }
+      }.bind(this);
+
+      var keys = "C C# D Eb E F F# G Ab A Bb B".split(" ");
+      
+      return (
+        <select onChange={this.transpose}>
+          {_.map(keys, getKeyOption)}
+        </select>
+      )
+    },
+
     render: function() {
       if (!this.props.collection) {
         return false;
@@ -138,18 +163,18 @@
       return (
         <div>
           <div className="lyrics-songbook-cntnr">
-            <div className='title-bar'>
-              <div className="title-bar-left">
-                <span className="song-title">{this.props.collection.songName}</span>
-              </div>
-              <div className="title-bar-right">
-              </div>
-            </div>
             <div className="lyrics-view">
+              <div className='title-bar'>
+                <div className="title-bar-left">
+                  <span className="song-title">{this.props.collection.songName}</span>
+                </div>
+                <div className="title-bar-right">
+                </div>
+              </div>
               <div className="song-menu">
                 <ul>
                   <li>{this.getEditButton()}</li>
-                  <li>Transpose</li>
+                  <li>Transpose Key To: {this.getKeyDropDown()}</li>
                   <li onClick={this.saveToSongbook}>Add to My Songbook</li>
                 </ul>
               </div>

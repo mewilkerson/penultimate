@@ -18,7 +18,7 @@
       <div>
         <div>
           <form onSubmit={this.onSubmit}>
-            <input ref="query" type="text" className="search-bar" size="50" />
+            <input ref="query" type="text" placeholder="Search for lyrics..." className="search-bar" size="120" />
             <select ref="genre">
               <option value="rock">Rock</option>
               <option value="rap">Rap</option>

@@ -93,24 +93,81 @@
 
     return new models.SongChordsLyrics(_.first(data,5), {songName: song.name});
 
-  };
+  }; 
 
 
   models.Song = Backbone.Model.extend({
     initialize: function() {
       this.lyricsCollection = new Backbone.Collection(this.get("lyrics"));
       this.lyricsCollection.songName = this.get("name");
+      this.lyricsCollection.songKey = this.get("key");
+      this.lyricsCollection.transpose = this.transpose.bind(this);
+
 
       this.on("sync", function(){
         console.log("model changed, updating collection");
         this.lyricsCollection.reset(this.get("lyrics"), {silent: true});
         this.lyricsCollection.songName = this.get("name");
+        this.lyricsCollection.songKey = this.get("key");
       });
 
       this.listenTo(this.lyricsCollection, "change", function() {
         console.log("collection changed, updating model");
         this.set("lyrics", this.lyricsCollection.toJSON());
       });
+
+      this.keymap = {
+        "C"   : ["C", "Dm", "Em", "F", "G", "Am", "Bbdim"],
+        "C#"  : ["C#", "Ebm", "Fm", "F#", "Ab", "Bb", "C"],
+        "D"   : ["D", "Em", "F#m", "G", "A", "Bm", "C#dim"],
+        "Eb"  : ["Eb", "Fm", "Gm", "Ab", "Bb", "Cm", "Ddim"],
+        "E"   : ["E", "F#m", "G#m", "A", "B", "C#m", "Ebdim"],
+        "F"   : ["F", "Gm", "Am", "Bb", "C", "Dm", "Edim"],
+        "F#"  : ["F#", "G#", "Bbm", "B", "C#", "Ebm", "F"],
+        "G"   : ["G", "Am", "Bm", "C", "D", "Em", "F#dim"],
+        "Ab"  : ["Ab", "Bb", "Cm", "C#", "Eb", "F", "G"],
+        "A"   : ["A", "Bm", "C#m", "D", "E", "F#min", "G#dim"],
+        "Bb"  : ["Bb", "Cm", "Dm", "Eb", "F", "Gm", "Adim"],
+        "B"   : ["B", "C#m", "D#m", "E", "F#", "G#m", "Bbdim"]
+      }
+    },
+
+    transposeChord: function(keyFrom, chord, keyTo) {
+      var fromChords = this.keymap[keyFrom];
+      var toChords = this.keymap[keyTo];
+      var index = fromChords.indexOf(chord);
+      var newChord = toChords[index]
+      if(!newChord) {
+        return chord
+        // console.log("could not convert", keyFrom, chord, keyTo, fromChords, toChords, index);
+      }
+      return newChord;
+    },
+
+    transpose: function(newKey) {
+      var currentKey = this.get("key") || "G";
+      if(!currentKey) {
+        alert("Please enter an original key");
+        return;
+      }
+
+      var lyrics = this.get("lyrics");
+      var transposedLyrics = _.map(lyrics, function(lyric){
+        if (lyric.chord) {
+          var newChord = this.transposeChord(currentKey, lyric.chord, newKey);
+          lyric.chord = newChord;
+        }
+        return lyric;
+      }, this);
+
+      console.log("newKey", newKey, "lyrics", lyrics);
+
+      this.save({
+        key: newKey,
+        lyrics: transposedLyrics
+      });
+
+      this.lyricsCollection.reset(this.get("lyrics"));
     },
 
     getLyricsCollection: function() {

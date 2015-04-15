@@ -21,6 +21,8 @@
               <views.SongBook collection={this.props.model.songBook}/>
             </div>
           </div>
+          <div className="clear"></div>
+
         </div>
       );
     },

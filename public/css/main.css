@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 body {
   font-family: 'Lato', sans-serif;
   margin: 0;
@@ -6,20 +9,22 @@ body {
   background-image: url(/images/frontpage.jpg);
 }
 .header-container {
-  width: 960px;
+  width: 1000px;
   margin-left: auto;
   margin-right: auto;
 }
 .page-container {
-  width: 960px;
+  width: 1000px;
   margin-left: auto;
   margin-right: auto;
   background: rgba(255, 255, 255, 0.7);
+  min-height: calc(-145vh);
 }
 header {
   overflow: hidden;
   height: 100px;
   background: rgba(255, 255, 255, 0.8);
+  border-bottom: solid 5px #c9c9c9;
 }
 .header-left {
   font-family: 'Quicksand', sans-serif;
@@ -35,20 +40,58 @@ header {
   float: right;
   padding-top: 10px;
 }
+.clear {
+  clear: both;
+}
+footer {
+  height: calc(-115vh);
+  background: rgba(255, 255, 255, 0.8);
+  border-top: solid 5px #c9c9c9;
+  width: 100%;
+}
+.footer-container {
+  width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.footer-container .footer-text {
+  text-align: right;
+  padding-top: 40px;
+}
 .login-link {
   text-decoration: none;
 }
 .twitter-info {
-  float: right;
+  text-align: right;
+}
+.twitter-info ul .twitter-list {
+  margin: 0;
+  padding: 0;
 }
 .twitter-info .twitter-list li {
   list-style: none;
   display: inline-block;
-  margin: 10px;
+  margin-left: 10px;
 }
 .search {
   margin: 20px;
   padding: 10px;
+}
+.search .search-bar {
+  padding: 10px;
+  border: solid 5px #c9c9c9;
+  box-shadow: inset 0 0 0 1px #707070;
+  transition: box-shadow 0.3s, border 0.3s;
+}
+form {
+  text-align: center;
+}
+form select,
+button {
+  margin: 10px;
+}
+.fa-trash-o {
+  text-align: right;
 }
 .combo {
   display: inline-block;
@@ -75,9 +118,9 @@ header {
   float: left;
 }
 .title-bar .title-bar-left .song-title {
-  font-weight: bold;
   font-size: 30px;
-  padding: 10px;
+  padding: 20px;
+  margin-top: 20px;
 }
 .title-bar .title-bar-right {
   float: right;
@@ -92,6 +135,9 @@ header {
   float: left;
   background: rgba(255, 255, 255, 0.7);
 }
+.lyrics-songbook-cntnr {
+  margin-bottom: 20px;
+}
 .song-menu {
   height: 40px;
 }
@@ -105,9 +151,10 @@ header {
   display: inline;
 }
 .songbook {
-  width: 30%;
+  width: 28%;
   float: right;
   background: rgba(255, 255, 255, 0.7);
+  border-left: solid 5px #c9c9c9;
 }
 .songbook h2 {
   text-align: center;

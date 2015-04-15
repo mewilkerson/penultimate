@@ -36,7 +36,12 @@ $(function(){
     return data;
   }
 
+  window.destroy = function(model) {
+    model.destroy();
+  }
+
   window.setSong = function(song) {
+    window.song = song;
     view.setProps({collection: song.getLyricsCollection()});
   }
 
