@@ -26,7 +26,7 @@
       return (
         <div className="twitter-info">
           <ul className="twitter-list">
-            <li><img src={this.props.model.get("profile_image_url")}/></li>
+            <li><img src={this.props.model.get("profile_image_url_https")}/></li>
             <li><div className="twitter-username">{this.props.model.get("name")}</div></li>
             <li><i className="fa fa-sign-out" onClick={this.logOut}></i></li>
           </ul>
