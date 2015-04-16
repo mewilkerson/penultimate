@@ -178,7 +178,7 @@ button {
   margin-left: 5px;
 }
 .lyrics-view {
-  margin-top: 15px;
+  margin-top: 20px;
   margin-bottom: 200px;
   width: 70%;
   float: left;
@@ -214,7 +214,7 @@ button {
 }
 .songbook {
   width: 28%;
-  margin-top: 15px;
+  margin-top: 20px;
   float: right;
   background: rgba(255, 255, 255, 0.85);
   border-radius: 4px;
