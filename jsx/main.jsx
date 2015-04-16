@@ -28,7 +28,16 @@
     },
 
     renderLogin: function() {
-      return <views.Header model={this.props.model}/>
+      return (
+        <div className="everything">
+          <header>
+            <div className="header-container">
+              <views.Header model={this.props.model}/>
+            </div>
+          </header>
+          <div className="clear"></div>
+        </div>
+      );
     },
 
     render: function() {

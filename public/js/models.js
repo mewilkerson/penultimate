@@ -145,7 +145,7 @@
     },
 
     transpose: function(newKey) {
-      var currentKey = this.get("key") || "G";
+      var currentKey = this.get("key") || "C";
       if(!currentKey) {
         alert("Please enter an original key");
         return;

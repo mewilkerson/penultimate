@@ -20,14 +20,18 @@ body {
   width: 1000px;
   margin-left: auto;
   margin-right: auto;
-  background: rgba(255,255,255,.7);
+  margin-top: 15px;
+  background: rgba(255,255,255,.85);
   min-height: calc(100vh - 245px);
+  border-radius: 4px;
+  border-top: solid 5px #c9c9c9;
+  border-bottom: solid 5px #c9c9c9;
 }
 
 header {
   overflow: hidden;
   height: 100px;
-  background: rgba(255,255,255,.8);
+  background: rgba(255,255,255,.85);
   border-bottom: solid 5px #c9c9c9;
 }
 
@@ -39,11 +43,17 @@ header {
   .logo {
     font-size: 60px;
     margin-left: 20px;
+    color: #384050;
   }
+}
+
+.lyric-line {
+    border-top: 1px dashed rgba(0,0,0,.1);
 }
 
 
 .header-right {
+  font-family: 'Merriweather', sans-serif;
   font-size: 25px;
   float: right;
   padding-top: 10px;
@@ -56,7 +66,7 @@ header {
 
 footer {
   height: calc(100vh - 215px);
-  background: rgba(255,255,255,.8);
+  background: rgba(255,255,255,.85);
   border-top: solid 5px #c9c9c9;
   width: 100%;
 
@@ -72,28 +82,45 @@ footer {
   }
 }
 
+.logged-out-div {
+  margin-top: 30px;
+}
 
+.fa-sign-out {
+  color: #A1A3AD;
+  cursor: pointer;
+}
 
 .login-link {
   text-decoration: none;
 }
 
+a.login-link {
+  color: #384050;
+}
 
 .twitter-info {
   text-align: right;
   .twitter-list {
-    margin: 15px 0 0 0;
+    margin: 20px 0 0 0;
     padding: 0;
     img {
       vertical-align: middle;
+      border-radius: 50%;
+      border: solid 3px #c9c9c9;
     }
   }
+}
+
+
+.twitter-username {
+  color: #384050;
 }
 
 .twitter-list li {
   list-style: none;
   display: inline-block;
-  margin-left: 10px;
+  margin-left: 20px;
 }
 
 
@@ -108,6 +135,18 @@ footer {
   }
 }
 
+.search-button {
+  padding: 10px;
+  border: 1px solid eee;
+  border-radius: 4px;
+  border: none;
+  border-bottom: solid 5px #8890a0;
+  background: #384050;
+  color: #8890a0;
+  font-family: Merriweather, sans-serif;
+  font-size: 15px;
+}
+
 form {
   text-align: center;
 }
@@ -118,6 +157,9 @@ form select, button {
 
 .fa-trash-o {
   text-align: right;
+  &:hover {
+  color: #b12d1e;
+  }
 }
 
 .combo {
@@ -125,14 +167,17 @@ form select, button {
   margin: 3px;
   font-size: 18px;
   text-align: center;
+  padding: 15px 0;
   .chord {
-    font-family: Fira Sans, sans-serif;
+    font-family: Fugaz One, Fira Sans, sans-serif;
     font-size: 1.2em;
-    color: #008;
+    color: #b12d1e;
     min-height: 35px;
   }
   .word {
     padding: 10px;
+    padding-top: 0px;
+    padding-bottom: 0px;
   }
   input {
     text-align: center;
@@ -159,12 +204,13 @@ form select, button {
 // }
 
 .title-bar {
+  margin-top: 15px;
+  margin-bottom: 10px;
   height: 50px;
   .title-bar-left {
     float: left;
     .song-title {
-      // font-weight: bold;
-      // padding-left: 15px;
+      font-family: Merriweather, sans-serif;
       font-size: 30px;
       padding: 20px;
       margin-top: 20px;
@@ -181,17 +227,28 @@ form select, button {
 }
 
 .lyrics-view {
+  margin-top: 15px;
+  margin-bottom: 200px;
   width: 70%;
   float: left;
-  background: rgba(255,255,255,.7);
+  background: rgba(255,255,255,.85);
+  border-radius: 4px;
+  border-top: solid 5px #c9c9c9;
 }
 
 .lyrics-songbook-cntnr {
   margin-bottom: 20px;
 }
 
+.songbook-title {
+  font-family: Merriweather, sans-serif;
+}
+
 .song-menu {
   height: 40px;
+  font-family: Merriweather, sans-serif;
+  text-align: center;
+
   // background: red;
   ul {
     margin: 0;
@@ -201,22 +258,29 @@ form select, button {
       list-style: none;
       margin: 10px;
       display: inline;
-      padding: 4px;
+      padding: 10px;
       border: 1px solid eee;
       border-radius: 4px;
-      background: rgba(255,255,255,.5);
+      border-bottom: solid 5px #8890a0;
+      background: #384050;
+      color: #8890a0;
     }
   }
 }
 
 .songbook {
   width: 28%;
+  margin-top: 15px;
   float: right;
-  background: rgba(255,255,255,.7);
-  border-left: solid 5px #c9c9c9;
+  background: rgba(255,255,255,.85);
+  // border-left: solid 5px #c9c9c9;
+  border-radius: 4px;
+  border-top: solid 5px #c9c9c9;
   padding: 15px;
   h2 {
     text-align: center;
+    margin: 0 0 15px 0;
+    padding: 0;
   }
 }
 
@@ -225,12 +289,22 @@ form select, button {
   margin: 0;
   li {
   list-style: none;
+  padding: 8px;
   }
 }
 
 .songbook-entry {
   padding: 4px;
-  margin: 3px 0 3px 0;
+  margin: 6px 0 6px 0;
+  overflow: hidden;
+  background: rgba(255,255,255,.5);
+  border-left: solid 5px #c9c9c9;
+  border-right: solid 5px #c9c9c9;
+  border-radius: 4px;
+  cursor: pointer;
+  &:hover {
+    background: #FFF;
+  }
 }
 
 .songbook-list li i {
@@ -239,6 +313,14 @@ form select, button {
 
 .songbook-list li span:first-child {
   float: left;
-  max-width: 90%
-
+  max-width: 90%;
+  white-space: pre;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }   
+
+.hov-sel:hover {
+  background: #606D87;
+  color: #BABABA;
+  cursor: pointer;
+}

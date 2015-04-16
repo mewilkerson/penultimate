@@ -80,14 +80,14 @@
     },
 
     getSong: function(model, index) {
-      return <li key={index} onClick={this.showSong.bind(this, model)}>{model.get("name")} <i className="fa fa-trash-o" onClick={this.blowUpSong.bind(this, model)}></i></li>
+      return <li key={index} className="songbook-entry" onClick={this.showSong.bind(this, model)}>{model.get("name")} <i className="fa fa-trash-o" onClick={this.blowUpSong.bind(this, model)}></i></li>
     },
 
     render: function() {
       if (penultimate.isLoggedIn()) {
         return (
           <div>
-            <h2>My Songbook</h2>
+            <h2 className="songbook-title">My Songbook</h2>
             <ul className="songbook-list">
               {this.props.collection ? this.props.collection.map(this.getSong) : false}
             </ul>
@@ -173,9 +173,9 @@
               </div>
               <div className="song-menu">
                 <ul>
-                  <li>{this.getEditButton()}</li>
+                  <li className="hov-sel">{this.getEditButton()}</li>
                   <li>Transpose Key To: {this.getKeyDropDown()}</li>
-                  <li onClick={this.saveToSongbook}>Add to My Songbook</li>
+                  <li className="hov-sel" onClick={this.saveToSongbook}>Add to My Songbook</li>
                 </ul>
               </div>
               <views.Lyrics collection={this.props.collection} editing={this.state.editing}/>

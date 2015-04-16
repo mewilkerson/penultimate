@@ -7,8 +7,7 @@
     },
     render: function(){
       return (
-        <div>
-          <p>No user currently logged in.</p>
+        <div className="logged-out-div">
           <a href="#" className="login-link" onClick={this.logIn}>Log in with <i className="fa fa-twitter-square"></i></a>
         </div>
       );
@@ -28,7 +27,7 @@
         <div className="twitter-info">
           <ul className="twitter-list">
             <li><img src={this.props.model.get("profile_image_url")}/></li>
-            <li><div>{this.props.model.get("name")}</div></li>
+            <li><div className="twitter-username">{this.props.model.get("name")}</div></li>
             <li><i className="fa fa-sign-out" onClick={this.logOut}></i></li>
           </ul>
         </div>

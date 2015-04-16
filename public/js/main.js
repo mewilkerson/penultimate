@@ -63,7 +63,8 @@ $(function(){
           console.log("song not found!");
           var data = {
             lyrics: buildSongData(response),
-              name: response.name
+              name: response.name,
+               key: "C"
           }
           song = new penultimate.models.Song(data);
         }

@@ -18,14 +18,14 @@
       <div>
         <div>
           <form onSubmit={this.onSubmit}>
-            <input ref="query" type="text" placeholder="Search for lyrics..." className="search-bar" size="120" />
+            <input ref="query" type="text" placeholder="Search for lyrics..." className="search-bar" size="110" />
             <select ref="genre">
               <option value="rock">Rock</option>
               <option value="rap">Rap</option>
               <option value="country">Country</option>
               <option value="pop">Pop</option>
             </select>
-            <button className="search-button">Search</button>
+            <button className="search-button hov-sel">Search</button>
           </form>
         </div>
         {/*<div className="search-auto-complete">
@@ -36,17 +36,17 @@
     }
   });
 
-  views.SearchAutoCompleteDropDown = React.createClass({
-    render: function() {
-      return (
-        <ul className="drop-down">
-          <li>Wonderwall by Oasis</li>
-          <li>Wonderwall by Mike Posner (Ft. Big KRIT)</li>
-          <li>Wonderwall by One Direction</li>
-          <li>Wonderwall by Illy</li>
-        </ul>
-      );
-    }
-  });
+  // views.SearchAutoCompleteDropDown = React.createClass({
+  //   render: function() {
+  //     return (
+  //       <ul className="drop-down">
+  //         <li>Wonderwall by Oasis</li>
+  //         <li>Wonderwall by Mike Posner (Ft. Big KRIT)</li>
+  //         <li>Wonderwall by One Direction</li>
+  //         <li>Wonderwall by Illy</li>
+  //       </ul>
+  //     );
+  //   }
+  // });
 
 })(penultimate.views);

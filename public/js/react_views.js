@@ -7,8 +7,7 @@
     },
     render: function(){
       return (
-        React.createElement("div", null, 
-          React.createElement("p", null, "No user currently logged in."), 
+        React.createElement("div", {className: "logged-out-div"}, 
           React.createElement("a", {href: "#", className: "login-link", onClick: this.logIn}, "Log in with ", React.createElement("i", {className: "fa fa-twitter-square"}))
         )
       );
@@ -28,7 +27,7 @@
         React.createElement("div", {className: "twitter-info"}, 
           React.createElement("ul", {className: "twitter-list"}, 
             React.createElement("li", null, React.createElement("img", {src: this.props.model.get("profile_image_url")})), 
-            React.createElement("li", null, React.createElement("div", null, this.props.model.get("name"))), 
+            React.createElement("li", null, React.createElement("div", {className: "twitter-username"}, this.props.model.get("name"))), 
             React.createElement("li", null, React.createElement("i", {className: "fa fa-sign-out", onClick: this.logOut}))
           )
         )
@@ -155,14 +154,14 @@
     },
 
     getSong: function(model, index) {
-      return React.createElement("li", {key: index, onClick: this.showSong.bind(this, model)}, model.get("name"), " ", React.createElement("i", {className: "fa fa-trash-o", onClick: this.blowUpSong.bind(this, model)}))
+      return React.createElement("li", {key: index, className: "songbook-entry", onClick: this.showSong.bind(this, model)}, model.get("name"), " ", React.createElement("i", {className: "fa fa-trash-o", onClick: this.blowUpSong.bind(this, model)}))
     },
 
     render: function() {
       if (penultimate.isLoggedIn()) {
         return (
           React.createElement("div", null, 
-            React.createElement("h2", null, "My Songbook"), 
+            React.createElement("h2", {className: "songbook-title"}, "My Songbook"), 
             React.createElement("ul", {className: "songbook-list"}, 
               this.props.collection ? this.props.collection.map(this.getSong) : false
             )
@@ -248,9 +247,9 @@
               ), 
               React.createElement("div", {className: "song-menu"}, 
                 React.createElement("ul", null, 
-                  React.createElement("li", null, this.getEditButton()), 
+                  React.createElement("li", {className: "hov-sel"}, this.getEditButton()), 
                   React.createElement("li", null, "Transpose Key To: ", this.getKeyDropDown()), 
-                  React.createElement("li", {onClick: this.saveToSongbook}, "Add to My Songbook")
+                  React.createElement("li", {className: "hov-sel", onClick: this.saveToSongbook}, "Add to My Songbook")
                 )
               ), 
               React.createElement(views.Lyrics, {collection: this.props.collection, editing: this.state.editing})
@@ -298,7 +297,16 @@
     },
 
     renderLogin: function() {
-      return React.createElement(views.Header, {model: this.props.model})
+      return (
+        React.createElement("div", {className: "everything"}, 
+          React.createElement("header", null, 
+            React.createElement("div", {className: "header-container"}, 
+              React.createElement(views.Header, {model: this.props.model})
+            )
+          ), 
+          React.createElement("div", {className: "clear"})
+        )
+      );
     },
 
     render: function() {
@@ -335,14 +343,14 @@
       React.createElement("div", null, 
         React.createElement("div", null, 
           React.createElement("form", {onSubmit: this.onSubmit}, 
-            React.createElement("input", {ref: "query", type: "text", placeholder: "Search for lyrics...", className: "search-bar", size: "120"}), 
+            React.createElement("input", {ref: "query", type: "text", placeholder: "Search for lyrics...", className: "search-bar", size: "110"}), 
             React.createElement("select", {ref: "genre"}, 
               React.createElement("option", {value: "rock"}, "Rock"), 
               React.createElement("option", {value: "rap"}, "Rap"), 
               React.createElement("option", {value: "country"}, "Country"), 
               React.createElement("option", {value: "pop"}, "Pop")
             ), 
-            React.createElement("button", {className: "search-button"}, "Search")
+            React.createElement("button", {className: "search-button hov-sel"}, "Search")
           )
         )
         /*<div className="search-auto-complete">
@@ -353,17 +361,17 @@
     }
   });
 
-  views.SearchAutoCompleteDropDown = React.createClass({displayName: "SearchAutoCompleteDropDown",
-    render: function() {
-      return (
-        React.createElement("ul", {className: "drop-down"}, 
-          React.createElement("li", null, "Wonderwall by Oasis"), 
-          React.createElement("li", null, "Wonderwall by Mike Posner (Ft. Big KRIT)"), 
-          React.createElement("li", null, "Wonderwall by One Direction"), 
-          React.createElement("li", null, "Wonderwall by Illy")
-        )
-      );
-    }
-  });
+  // views.SearchAutoCompleteDropDown = React.createClass({
+  //   render: function() {
+  //     return (
+  //       <ul className="drop-down">
+  //         <li>Wonderwall by Oasis</li>
+  //         <li>Wonderwall by Mike Posner (Ft. Big KRIT)</li>
+  //         <li>Wonderwall by One Direction</li>
+  //         <li>Wonderwall by Illy</li>
+  //       </ul>
+  //     );
+  //   }
+  // });
 
 })(penultimate.views);
