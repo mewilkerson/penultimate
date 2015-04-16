@@ -44,6 +44,8 @@ app.get("/search", function(req, res) {
 
   rg_api.searchSong(query, genre, function(err, songs){
     if (err) {
+      console.log("error searching for ", query, genre);
+      console.log(err);
       res.status(500).json({error: err.toString()});
     } else {
       var song = songs[0];
@@ -51,6 +53,8 @@ app.get("/search", function(req, res) {
       var name = song.name;
       rg_api.searchLyricsAndExplanations(link, genre, function(err, resp){
         if (err) {
+          console.log("error getting lyrics from", link, genre);
+          console.log(err);
           res.status(500).json({error: err.toString()});
         } else {
           var lyrics = resp.lyrics;
