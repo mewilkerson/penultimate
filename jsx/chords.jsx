@@ -138,12 +138,12 @@
     },
 
     getKeyDropDown: function() {
-      var getKeyOption = function(key) {
+      var getKeyOption = function(key, index) {
         if (key === this.props.collection.songKey) {
-          return <option value={key} selected="selected">{key}</option>
+          return <option key={index} value={key} selected="selected">{key}</option>
         }
         else {
-          return <option value={key}>{key}</option>
+          return <option key={index} value={key}>{key}</option>
         }
       }.bind(this);
 
